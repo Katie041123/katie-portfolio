@@ -1,0 +1,59 @@
+/* Book pages are bounded compositions; detailed documents open in the reader dialog. */
+.book-surface .spread{container-type:size;overflow:hidden}
+.book-surface:not(.about-surface) .page{overflow:hidden;display:flex;flex-direction:column;gap:1.5cqh;padding:4cqh 3cqw;min-height:0}
+.book-surface:not(.about-surface) .page-label{margin:0 0 1cqh;flex-shrink:0;font-size:clamp(9px,2cqh,12px)}
+.book-surface:not(.about-surface) .page h2{font-size:clamp(19px,4.8cqh,30px);margin:0;line-height:1.3}
+.book-surface:not(.about-surface) .english{font-size:clamp(21px,5.2cqh,34px);margin:0;line-height:1.2}
+.book-surface:not(.about-surface) .body-copy{font-size:clamp(11px,2.6cqh,16px);line-height:1.65;margin:1cqh 0}
+.book-surface:not(.about-surface) .page-number{margin:auto 0 0;font-size:clamp(14px,3cqh,20px);line-height:1}
+.book-surface .category-list{margin:1cqh 0;gap:0}
+.book-surface .category-list button{padding:1.4cqh 10px;font-size:clamp(12px,2.8cqh,16px)}
+.book-surface .category-list small{font-size:clamp(16px,3cqh,20px)}
+.book-surface .note{margin:0;padding:0 0 0 10px;font-size:clamp(10px,2.2cqh,13px);line-height:1.5}
+.book-surface #catalog{display:flex;flex-direction:column;min-height:0;flex:1;gap:2cqh}
+.book-surface .collection-meta{margin:0;font-size:clamp(10px,2.2cqh,13px)}
+.book-surface .project-grid{gap:2cqh 14px;flex:1;min-height:0;grid-template-rows:1fr 1fr}
+.book-surface .project-card{min-width:0}
+.book-surface .project-card img,.book-surface .brief-cover{height:21cqh;width:100%;aspect-ratio:auto;object-fit:contain}
+.book-surface .brief-cover{padding:2cqh 12px;font-size:5.4cqh}
+.book-surface .editorial-cover strong{font-size:3.2cqh}
+.book-surface .editorial-cover em{font-size:4cqh}
+.book-surface .brief-cover span{font-size:1.6cqh;margin-top:1cqh}
+.book-surface .project-card small{margin-top:1cqh;font-size:clamp(9px,2cqh,12px)}
+.book-surface .project-card h3{margin:0;font-size:clamp(11px,2.5cqh,15px);line-height:1.5}
+.book-surface .catalog-controls{margin:0;gap:18px;font-size:12px}
+.book-surface .catalog-controls button{min-height:28px;min-width:36px;height:5cqh;font-size:20px}
+.book-surface .website-card{margin:1cqh 0;flex:1;min-height:0;display:flex;flex-direction:column}
+.book-surface .website-card img{flex:1;min-height:0;height:0;object-fit:contain;background:#faf8f8;aspect-ratio:auto}
+.book-surface .website-card>span{padding:1.2cqh 12px;font-size:clamp(12px,2.7cqh,16px)}
+.book-surface .metrics{gap:20px;margin:0}
+.book-surface .metrics div{gap:3px}
+.book-surface .metrics strong{font-size:clamp(20px,4.4cqh,28px)}
+.book-surface .metrics span,.book-surface .micro-note{font-size:clamp(9px,1.9cqh,12px);margin:0}
+.book-surface .video-list{margin:0;display:grid;gap:1cqh}
+.book-surface .video-list section{display:grid;gap:.7cqh}
+.book-surface #video-catalog{display:flex;flex-direction:column;gap:1cqh}
+.book-surface[data-chapter="3"] .page:last-child{gap:.7cqh;padding-top:3cqh;padding-bottom:3cqh}
+.book-surface[data-chapter="3"] .page:last-child .body-copy{font-size:clamp(11px,2.4cqh,14px);margin:0}
+.book-surface .video-list h3{font-size:clamp(11px,2.4cqh,14px);margin:0}
+.book-surface .document-link{padding:1cqh 10px;font-size:clamp(10px,2.25cqh,14px);line-height:1.4;margin:0}
+.book-surface .skills-list{display:grid;gap:1.4cqh;flex:1;min-height:0}
+.skill-card{display:flex;flex-direction:column;justify-content:center;gap:.7cqh;text-align:left;border:1px solid #e9dfe6;background:#fcf7fa;padding:1.2cqh 12px;min-height:0}
+.skill-card strong{font-size:clamp(12px,2.8cqh,17px);font-weight:500}
+.skill-card span{font-size:clamp(10px,2.2cqh,13px);color:#756675;line-height:1.5}
+.skill-card small{font-size:clamp(9px,2cqh,12px);color:#946e86}
+.skill-card i{font-style:normal;float:right}
+.book-surface .contact-email{margin:1cqh 0;font-size:clamp(12px,2.8cqh,17px)}
+.book-surface .resume-actions{margin:0;gap:1cqh}
+.book-surface .section-title{margin:1cqh 0 0;font-size:clamp(12px,2.7cqh,16px)}
+.book-surface .honors{margin:0;padding-left:18px;font-size:clamp(10px,2.3cqh,14px);line-height:1.5}
+.book-surface .honors li{margin:0 0 .8cqh}
+.book-surface .contents-list{margin:0}
+.book-surface .contents-list button{padding:1cqh 0;font-size:clamp(12px,2.7cqh,16px)}
+@media(max-width:650px){
+  .reader.open .book-surface .spread{display:block;overflow:hidden;height:100%;padding:10px}
+  .reader.open .book-surface .page{height:100%;min-height:0;overflow:hidden;border:0}
+  .reader.open .book-surface .page[hidden]{display:none}
+  .reader.open .book-surface .page{padding:4cqh 5cqw}
+  .reader.open .book-surface[data-chapter="3"] .page:last-child{padding-top:3cqh;padding-bottom:3cqh}
+}
