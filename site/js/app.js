@@ -154,7 +154,8 @@ function renderContact() {
 /* ---------- detail dialog ---------- */
 const dialog = $('#detail');
 const body = $('#detail-body');
-let gallery = [], galleryIndex = 0, pushedState = false, opener = null, currentWork = null;
+const wait = ms => new Promise(r => setTimeout(r, ms));
+let gallery = [], galleryIndex = 0, opener = null, route = null, flipToken = 0, albumScroll = 0, photoFromGrid = false, closing = false;
 
 function infoBlocks(p) {
   const left = [];
@@ -179,9 +180,9 @@ function workbookMarkup(sheets) {
     : `<section class="sheet-copy"><h4>${esc(b.title)}</h4><p>${esc(b.text)}</p></section>`).join('')}</section>`).join('');
   return tabs + panels;
 }
-function galleryMarkup(images) {
+function galleryMarkup(images, label = '作品图片') {
   const many = images.length > 1;
-  return `<section class="viewer" aria-label="作品图片">
+  return `<section class="viewer" aria-label="${esc(label)}">
     <div class="viewer-bar">
       ${many ? '<button type="button" data-step="-1" aria-label="上一页">←</button>' : ''}
       <span class="viewer-count" id="viewer-count"></span>
@@ -190,39 +191,87 @@ function galleryMarkup(images) {
       <p class="viewer-cap" id="viewer-cap" aria-live="polite"></p>
     </div>
     ${many ? `<div class="thumbs" id="thumbs">${images.map((im, i) => `<button type="button" data-goto="${i}" aria-label="第 ${i + 1} 页：${esc(im.caption)}"><img src="${esc(im.thumb || im.src)}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}
-    <div class="viewer-stage" id="viewer-stage"><div class="viewer-page" id="viewer-page"></div></div>
+    <div class="viewer-stage" id="viewer-stage">
+      ${many ? '<button type="button" class="stage-nav stage-nav--prev" data-step="-1" aria-label="上一页"><span aria-hidden="true">‹</span></button><button type="button" class="stage-nav stage-nav--next" data-step="1" aria-label="下一页"><span aria-hidden="true">›</span></button>' : ''}
+      <div class="viewer-page" id="viewer-page"></div>
+    </div>
+    ${many ? '<p class="viewer-tip">可以用键盘 ← →、左右滑动，或点图片两侧的箭头翻页</p>' : ''}
   </section>`;
 }
 function imageMarkup(im) {
   const m = MEDIA[im.src];
-  if (m?.tiles) return `<div class="tiles">${m.tiles.map((t, i) => `<img src="${esc(t.src)}" width="${t.width}" height="${t.height}" alt="${i ? '' : esc(im.caption)}" ${i > 1 ? 'loading="lazy"' : ''}>`).join('')}</div>`;
+  if (m?.tiles) return `<div class="tiles">${m.tiles.map((t, i) => `<img src="${esc(t.src)}" width="${t.width}" height="${t.height}" alt="${i ? '' : esc(im.caption)}" decoding="async" ${i > 1 ? 'loading="lazy"' : ''}>`).join('')}</div>`;
   const src = m?.display || im.src;
-  return `<img src="${esc(src)}" ${im.width ? `width="${m?.width || im.width}" height="${m?.height || im.height}"` : ''} alt="${esc(im.caption)}">`;
+  return `<img src="${esc(src)}" ${im.width ? `width="${m?.width || im.width}" height="${m?.height || im.height}"` : ''} alt="${esc(im.caption)}" decoding="async">`;
 }
-function showImage(n, dir = 0) {
+
+/* gallery: preload neighbours so a page turn never waits on the network */
+const firstSrc = im => { const m = MEDIA[im.src]; return m?.tiles ? m.tiles[0].src : (m?.display || im.src); };
+const decoded = new Map();
+function preload(im) {
+  if (!im) return Promise.resolve();
+  const src = firstSrc(im);
+  if (!decoded.has(src)) {
+    const img = new Image();
+    img.decoding = 'async';
+    img.src = src;
+    decoded.set(src, (img.decode ? img.decode() : new Promise(r => { img.onload = img.onerror = r; })).catch(() => {}));
+  }
+  return decoded.get(src);
+}
+function updateControls() {
+  const im = gallery[galleryIndex];
+  $('#viewer-count').textContent = `${galleryIndex + 1} / ${gallery.length}`;
+  $('#viewer-cap').textContent = im.caption || '';
+  $('#viewer-orig').href = im.src;
+  $$('[data-step]', body).forEach(b => { b.disabled = (+b.dataset.step < 0 && galleryIndex === 0) || (+b.dataset.step > 0 && galleryIndex === gallery.length - 1); });
+  const strip = $('#thumbs', body);
+  if (!strip) return;
+  [...strip.children].forEach((b, i) => { if (i === galleryIndex) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+  // Scroll the strip sideways only; scrollIntoView would also scroll the dialog.
+  const btn = strip.children[galleryIndex];
+  strip.scrollTo({ left: btn.offsetLeft - (strip.clientWidth - btn.offsetWidth) / 2, behavior: reduced() ? 'auto' : 'smooth' });
+}
+function paintImage() {
+  const im = gallery[galleryIndex];
+  $('#viewer-page').innerHTML = imageMarkup(im);
+  $('#viewer-stage').classList.toggle('is-tiled', !!MEDIA[im.src]?.tiles);
+}
+// Keep the picture where the reader is looking: only when its top has slid under the
+// sticky bar (or, for thumbnail jumps, is out of sight below) line it up under the bar.
+function keepStageInView(reveal) {
+  const bar = $('.viewer-bar', body), stage = $('#viewer-stage', body);
+  if (!bar || !stage) return;
+  const barBottom = bar.getBoundingClientRect().bottom;
+  const top = stage.getBoundingClientRect().top;
+  if (top < barBottom || (reveal && top > body.getBoundingClientRect().bottom - 160)) body.scrollTop += top - barBottom - 10;
+}
+async function showImage(n, dir = 0, { reveal = false } = {}) {
   if (!gallery.length) return;
   galleryIndex = Math.max(0, Math.min(gallery.length - 1, n));
-  const im = gallery[galleryIndex];
+  const token = ++flipToken;
+  updateControls();
+  if (route?.type === 'album' && route.photo !== null) {
+    route.photo = galleryIndex;
+    history.replaceState(history.state, '', `#album/${galleryIndex + 1}`);
+  }
   const page = $('#viewer-page');
-  const paint = () => {
-    page.innerHTML = imageMarkup(im);
-    $('#viewer-count').textContent = `${galleryIndex + 1} / ${gallery.length}`;
-    $('#viewer-cap').textContent = im.caption || '';
-    $('#viewer-orig').href = im.src;
-    $$('[data-step]', body).forEach(b => { b.disabled = (+b.dataset.step < 0 && galleryIndex === 0) || (+b.dataset.step > 0 && galleryIndex === gallery.length - 1); });
-    $$('#thumbs [data-goto]', body).forEach((b, i) => {
-      if (i === galleryIndex) { b.setAttribute('aria-current', 'true'); b.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } else b.removeAttribute('aria-current');
-    });
-  };
-  if (!dir || reduced()) { paint(); return; }
-  const side = dir > 0 ? 'next' : 'prev';
-  page.className = `viewer-page out-${side}`;
-  setTimeout(() => {
-    paint();
+  const ready = Promise.race([preload(gallery[galleryIndex]), wait(1500)]);
+  if (dir && !reduced()) {
+    const side = dir > 0 ? 'next' : 'prev';
+    page.className = `viewer-page out-${side}`;
+    await Promise.all([wait(180), ready]);
+    if (token !== flipToken) return;
+    paintImage();
+    keepStageInView(reveal);
     page.className = `viewer-page in-${side}`;
-    const stage = $('#viewer-stage');
-    if (stage.getBoundingClientRect().top < 0) body.scrollTop += stage.getBoundingClientRect().top - body.getBoundingClientRect().top - 70;
-  }, 190);
+  } else {
+    if (dir || reveal) await ready;
+    if (token !== flipToken) return;
+    paintImage();
+    if (dir || reveal) keepStageInView(reveal);
+  }
+  [1, 2, -1].forEach(o => preload(gallery[galleryIndex + o]));
 }
 function step(delta) {
   const n = galleryIndex + delta;
@@ -230,52 +279,102 @@ function step(delta) {
   showImage(n, delta);
 }
 
-function openDialog(crumb, html, { images = [], label } = {}) {
+function openDialog(crumb, html, { images = [], start = 0, scroll = 0, label } = {}) {
   if (!dialog.open) opener = document.activeElement;
   $('#detail-crumb').textContent = crumb;
   body.innerHTML = html;
-  body.scrollTop = 0;
   gallery = images;
   galleryIndex = 0;
-  if (gallery.length) showImage(0);
+  flipToken++;
   dialog.setAttribute('aria-label', label || crumb);
   if (!dialog.open) dialog.showModal();
   document.documentElement.classList.add('modal-open');
+  body.scrollTop = scroll;
+  if (gallery.length) showImage(start);
   body.focus({ preventScroll: true });
 }
-function openWork(id, { push = false } = {}) {
+function workPager(id) {
+  const list = D.projects, i = list.findIndex(p => p.id === id);
+  const prev = list[(i - 1 + list.length) % list.length], next = list[(i + 1) % list.length];
+  return `<nav class="d-pager" aria-label="切换作品"><a href="${workHref(prev.id)}"><small>← 上一个作品</small><span>${esc(prev.title)}</span></a><a href="${workHref(next.id)}"><small>下一个作品 →</small><span>${esc(next.title)}</span></a></nav>`;
+}
+function renderWork(id) {
   const p = byId[id];
-  if (!p) return false;
-  currentWork = id;
-  if (push) { history.pushState({ work: id }, '', workHref(id)); pushedState = true; }
   let extra = '';
   if (p.workbook) extra = workbookMarkup(p.workbook);
   else if (p.sites) extra = sitesMarkup(p);
   else if (p.images?.length) extra = galleryMarkup(p.images);
-  const html = `<header class="d-head"><span class="chip" data-tone="${catTone(p.category)}">${esc(p.category)}</span><h2 id="detail-title">${esc(p.title)}</h2>${p.summary ? `<p class="d-summary">${esc(p.summary)}</p>` : ''}</header>${infoBlocks(p)}${docsMarkup(p)}${p.note ? `<p class="d-note">${esc(p.note)}</p>` : ''}${extra}`;
+  const jump = p.workbook || p.sites || !p.images?.length ? '' : `<button type="button" class="d-jump" data-jump>↓ 直接看作品图片（${p.images.length} 页）</button>`;
+  const html = `<header class="d-head"><span class="chip" data-tone="${catTone(p.category)}">${esc(p.category)}</span><h2 id="detail-title">${esc(p.title)}</h2>${p.summary ? `<p class="d-summary">${esc(p.summary)}</p>` : ''}${jump}</header>${infoBlocks(p)}${docsMarkup(p)}${p.note ? `<p class="d-note">${esc(p.note)}</p>` : ''}${extra}${workPager(id)}`;
   openDialog(`作品 · ${p.category}`, html, { images: p.workbook || p.sites ? [] : (p.images || []), label: p.title });
-  return true;
 }
-function openResume() {
+function renderResume() {
   const im = D.resumeImages[0];
   openDialog('简历', `<header class="d-head"><h2>何静瑶 · 个人简历</h2><p class="d-summary">教育背景、实习经历与技能。</p></header><div class="d-docs"><a href="${esc(D.resumeUrl)}" download="何静瑶-简历.pdf">下载 PDF <span aria-hidden="true">↓</span></a><a href="${esc(D.resumeUrl)}" target="_blank" rel="noopener noreferrer">在新页面打开 <span aria-hidden="true">↗</span></a></div><div class="resume-view"><img src="${esc(im.src)}" width="${im.width}" height="${im.height}" alt="何静瑶的个人简历"></div>`, { label: '何静瑶的个人简历' });
 }
-function openAlbum() {
-  openDialog('生活里的 Katie', `<header class="album-intro"><span class="chip" data-tone="pink">A little more about me</span><h2>生活里的 Katie</h2><p>把喜欢的瞬间，慢慢收进这一页。</p></header><div class="album">${D.photos.map((im, i) => `<figure><a href="${esc(im.src)}" target="_blank" rel="noopener noreferrer" aria-label="查看第 ${i + 1} 张照片大图"><img src="${esc(MEDIA[im.src]?.display || im.src)}" alt="Katie 的生活照片 ${i + 1}" ${im.width ? `width="${im.width}" height="${im.height}"` : ''} loading="lazy"></a><figcaption><span>Moment ${String(i + 1).padStart(2, '0')}</span><span aria-hidden="true">${i % 3 ? '✧' : '♡'}</span></figcaption></figure>`).join('')}</div>`, { label: '生活里的 Katie 相册' });
+function renderAlbum(scroll = 0) {
+  openDialog('生活里的 Katie', `<header class="album-intro"><span class="chip" data-tone="pink">A little more about me</span><h2>生活里的 Katie</h2><p>把喜欢的瞬间，慢慢收进这一页。点照片可以放大看。</p></header><div class="album">${D.photos.map((im, i) => `<figure><button type="button" class="album-photo" data-photo="${i}" aria-label="放大第 ${i + 1} 张照片"><img src="${esc(MEDIA[im.src]?.display || im.src)}" alt="Katie 的生活照片 ${i + 1}" ${im.width ? `width="${im.width}" height="${im.height}"` : ''} loading="lazy" decoding="async"></button><figcaption><span>Moment ${String(i + 1).padStart(2, '0')}</span><span aria-hidden="true">${i % 3 ? '✧' : '♡'}</span></figcaption></figure>`).join('')}</div>`, { scroll, label: '生活里的 Katie 相册' });
+}
+function renderPhoto(n) {
+  openDialog('生活里的 Katie', `<button type="button" class="back-link" data-album-back>← 返回相册</button>${galleryMarkup(D.photos, 'Katie 的生活照片')}`, { images: D.photos, start: n, label: 'Katie 的生活照片' });
+}
+
+/* ---------- routes: #work/<id> · #resume · #album · #album/<n> ---------- */
+function parseRoute(h = location.hash) {
+  let m = h.match(/^#work\/(.+)$/);
+  if (m) { const id = decodeURIComponent(m[1]); return byId[id] ? { type: 'work', id } : null; }
+  m = h.match(/^#album(?:\/(\d+))?$/);
+  if (m) { const n = m[1] ? +m[1] - 1 : null; return { type: 'album', photo: n !== null && n >= 0 && n < D.photos.length ? n : null }; }
+  return h === '#resume' ? { type: 'resume' } : null;
+}
+const depth = () => history.state?.kd || 0;
+const restingUrl = r => (r?.type === 'work' ? '#works' : location.pathname + location.search);
+function render(r) {
+  const prev = route;
+  route = { ...r };
+  if (r.type === 'work') renderWork(r.id);
+  else if (r.type === 'resume') renderResume();
+  else if (r.photo !== null) {
+    photoFromGrid = prev?.type === 'album' && prev.photo === null;
+    if (photoFromGrid) albumScroll = body.scrollTop;
+    renderPhoto(r.photo);
+  } else renderAlbum(prev?.type === 'album' && prev.photo !== null ? albumScroll : 0);
+}
+function go(hash, { replace = false } = {}) {
+  const r = parseRoute(hash);
+  if (!r) return;
+  if (dialog.open && replace) history.replaceState({ kd: depth() }, '', hash);
+  else history.pushState({ kd: depth() + 1 }, '', hash);
+  render(r);
 }
 function closeDialog() {
   if (!dialog.open) return;
   dialog.close();
   document.documentElement.classList.remove('modal-open');
   gallery = [];
-  currentWork = null;
+  route = null;
+  flipToken++;
   opener?.focus?.({ preventScroll: true });
 }
+// Closing walks back through every entry the dialog added, so the phone's back
+// button and the close button agree and the visitor never leaves the site.
 function requestClose() {
-  if (currentWork && pushedState) { pushedState = false; history.back(); return; }
-  if (currentWork && location.hash.startsWith('#work/')) history.replaceState(null, '', '#works');
+  const d = depth();
+  if (d > 0) { closing = true; history.go(-d); return; }
+  if (parseRoute()) history.replaceState(null, '', restingUrl(route));
   closeDialog();
 }
+addEventListener('popstate', () => {
+  const r = parseRoute();
+  if (closing) {
+    closing = false;
+    if (r) history.replaceState(null, '', restingUrl(r));
+    closeDialog();
+    return;
+  }
+  if (r) render(r);
+  else closeDialog();
+});
 
 $('#detail-close').addEventListener('click', requestClose);
 dialog.addEventListener('cancel', e => { e.preventDefault(); requestClose(); });
@@ -285,10 +384,14 @@ dialog.addEventListener('click', e => {
   if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) requestClose();
 });
 body.addEventListener('click', e => {
+  if (e.target.closest('[data-jump]')) {
+    const viewer = $('.viewer', body);
+    if (viewer) body.scrollTo({ top: body.scrollTop + viewer.getBoundingClientRect().top - body.getBoundingClientRect().top - 12, behavior: reduced() ? 'auto' : 'smooth' });
+  }
   const s = e.target.closest('[data-step]');
   if (s) step(+s.dataset.step);
   const g = e.target.closest('[data-goto]');
-  if (g) showImage(+g.dataset.goto, +g.dataset.goto - galleryIndex);
+  if (g) showImage(+g.dataset.goto, +g.dataset.goto - galleryIndex, { reveal: true });
   const tab = e.target.closest('[data-sheet]');
   if (tab) {
     $$('[data-sheet]', body).forEach(t => t.setAttribute('aria-selected', String(t === tab)));
@@ -312,29 +415,24 @@ body.addEventListener('touchend', e => {
   touch = null;
 }, { passive: true });
 
-/* ---------- routing & global clicks ---------- */
-function workIdFromHash(h = location.hash) {
-  const m = h.match(/^#work\/(.+)$/);
-  return m ? decodeURIComponent(m[1]) : null;
-}
+/* ---------- global clicks ---------- */
 document.addEventListener('click', e => {
   const a = e.target.closest('a[href^="#work/"]');
   if (a && !e.metaKey && !e.ctrlKey && !e.shiftKey) {
     e.preventDefault();
-    const id = workIdFromHash(a.getAttribute('href'));
-    if (dialog.open && currentWork) { history.replaceState({ work: id }, '', workHref(id)); openWork(id); }
-    else openWork(id, { push: true });
+    go(a.getAttribute('href'), { replace: dialog.open && route?.type === 'work' });
     return;
   }
-  if (e.target.closest('[data-resume]')) { e.preventDefault(); openResume(); }
-  if (e.target.closest('[data-album]')) openAlbum();
+  if (e.target.closest('[data-resume]')) { e.preventDefault(); go('#resume'); }
+  if (e.target.closest('[data-album]')) go('#album');
+  const ph = e.target.closest('[data-photo]');
+  if (ph) go(`#album/${+ph.dataset.photo + 1}`);
+  if (e.target.closest('[data-album-back]')) {
+    if (photoFromGrid) history.back();
+    else go('#album', { replace: true });
+  }
   const f = e.target.closest('[data-cat]');
   if (f) setCategory(f.dataset.cat);
-});
-window.addEventListener('popstate', () => {
-  const id = workIdFromHash();
-  if (id && byId[id]) { pushedState = false; openWork(id); }
-  else if (dialog.open && currentWork) { pushedState = false; closeDialog(); }
 });
 
 /* ---------- init ---------- */
@@ -348,7 +446,6 @@ renderFilms();
 renderSkills();
 renderContact();
 
-const initialWork = workIdFromHash();
 const catMatch = location.hash.match(/^#works\/(.+)$/);
 if (catMatch) {
   setCategory(decodeURIComponent(catMatch[1]), { updateHash: false });
@@ -358,7 +455,7 @@ if (catMatch) {
 
 window.Katie = {
   data: D, byId, esc, toast, workHref, reduced,
-  openWork,
-  openInitial() { if (initialWork && byId[initialWork]) openWork(initialWork); }
+  openWork: id => go(workHref(id)),
+  openInitial() { const r = parseRoute(); if (r) render(r); }
 };
 })();

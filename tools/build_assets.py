@@ -202,10 +202,29 @@ def fonts():
         print(f"  {out.relative_to(SITE)}  {len(glyphs)} chars  {out.stat().st_size // 1024}KB")
 
 
-TASKS = {"images": [mascots, covers, media_manifest, resume, og_image], "fonts": [fonts]}
+def stamp():
+    """Add ?v=<content hash> to the CSS/JS links in index.html so visitors never mix
+    a new page with cached old scripts (GitHub Pages caches files for 10 minutes)."""
+    import hashlib
+
+    print("stamp")
+    index = SITE / "index.html"
+    html = index.read_text(encoding="utf-8")
+
+    def repl(m):
+        attr, path = m.group(1), m.group(2)
+        digest = hashlib.md5((SITE / path).read_bytes()).hexdigest()[:8]
+        print(f"  {path}?v={digest}")
+        return f'{attr}="{path}?v={digest}"'
+
+    html = re.sub(r'(href|src)="((?:css|js)/[\w-]+\.(?:css|js)|content\.js|media\.js)(?:\?v=\w+)?"', repl, html)
+    index.write_text(html, encoding="utf-8")
+
+
+TASKS = {"images": [mascots, covers, media_manifest, resume, og_image], "fonts": [fonts], "stamp": [stamp]}
 
 if __name__ == "__main__":
-    picked = sys.argv[1:] or ["images", "fonts"]
+    picked = sys.argv[1:] or ["images", "fonts", "stamp"]
     for name in picked:
         for task in TASKS[name]:
             task()

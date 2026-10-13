@@ -33,7 +33,8 @@ python -m http.server 8765 --directory site
 python tools/build_assets.py
 ```
 
-它会重新生成网页用图、长图切片，以及只包含站内用字的手写字体。
+它会重新生成网页用图、长图切片、只包含站内用字的手写字体，并给 CSS / JS 链接加上版本号（防止访客的浏览器用旧缓存）。
+只改了代码、没动图片的话，跑快速版就行：`python tools/build_assets.py fonts stamp`。
 **改了 `content.js` 或页面里的中文之后一定要跑一次**，不然新加的字可能显示成默认字体。
 
 需要的 Python 包：Pillow、fontTools、brotli、PyMuPDF。

@@ -87,8 +87,11 @@ const spy = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (!e.isIntersecting) return;
     links.forEach(a => {
-      if (a.getAttribute('href') === `#${e.target.id}`) a.setAttribute('aria-current', 'true');
-      else a.removeAttribute('aria-current');
+      if (a.getAttribute('href') !== `#${e.target.id}`) { a.removeAttribute('aria-current'); return; }
+      a.setAttribute('aria-current', 'true');
+      // On phones the link row scrolls sideways: keep the current section's link in view.
+      const row = a.parentElement;
+      if (row.scrollWidth > row.clientWidth) row.scrollTo({ left: a.offsetLeft - (row.clientWidth - a.offsetWidth) / 2, behavior: reduced() ? 'auto' : 'smooth' });
     });
   });
 }, { rootMargin: '-45% 0px -50% 0px' });
@@ -128,7 +131,8 @@ function placeWalker(stop, speak) {
   if (!stop) return;
   const y = Math.max(0, stop.offsetTop - 4);
   walker.style.setProperty('--y', `${y}px`);
-  fill.style.setProperty('--fill', `${y + walker.offsetHeight * .55}px`);
+  const rail = fill.parentElement;
+  fill.style.setProperty('--p', Math.min(1, (y + walker.offsetHeight * .55) / Math.max(1, rail.clientHeight)).toFixed(4));
   stops.forEach(s => s.classList.toggle('is-active', s === stop));
   if (!reduced()) {
     walker.classList.add('walking');
