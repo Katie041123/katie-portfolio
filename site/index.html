@@ -1,7 +1,238 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>何静瑶 Katie · 作品集</title><meta name="description" content="翻开何静瑶 Katie 的个人作品集：项目、设计、网站与影像。"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='3' width='21' height='26' rx='2' fill='%23f3dce5'/%3E%3Cpath d='M10 4v24m5-17v10m0-5 7-5m-7 5 7 5' stroke='%234d4550' fill='none' stroke-width='2'/%3E%3C/svg%3E"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="collection.css"><link rel="stylesheet" href="book-companion.css"><link rel="stylesheet" href="book-pages.css"></head>
-<body><a class="skip-link" href="#book">跳至作品集</a><header class="topbar"><button class="wordmark" data-go="0" aria-label="回到封面">Katie <span>/ 何静瑶</span></button><div class="top-actions"><button id="replay">重看开场</button><button data-go="2">直接看作品 <span aria-hidden="true">↗</span></button></div></header>
-<main class="reader" id="reader"><aside class="identity" id="identity"><span class="eyebrow">PERSONAL PORTFOLIO</span><div class="identity-heading"><div><h1>何静瑶</h1><p class="signature">Katie</p></div><div class="identity-avatar"><img src="assets/mascot-wave.png" alt="何静瑶的 Q 版头像" width="1024" height="1536"></div></div><nav aria-label="章节目录"><button data-go="1">01 <span>关于我</span></button><button data-go="2">02 <span>精选作品</span></button><button data-go="3">03 <span>网站与影像</span></button><button data-go="4">04 <span>技能清单</span></button></nav><p class="edition">一页一页，慢慢认识我。</p></aside>
-<section class="book-area" aria-label="翻页作品集"><div class="book" id="book" tabindex="-1"><div class="book-surface" id="surface"></div><div class="turn-sheet" id="turn-sheet" aria-hidden="true"></div><nav class="book-tabs" aria-label="书签"><button data-go="1" aria-label="关于我">01</button><button data-go="2" aria-label="精选作品">02</button><button data-go="3" aria-label="网站与影像">03</button><button data-go="4" aria-label="技能清单">04</button></nav></div><div class="reading-controls"><button id="previous" aria-label="上一页"><span aria-hidden="true">⟵</span><span>上一页</span></button><span id="page-position">封面</span><button id="next" aria-label="翻开作品集"><span id="next-label">点击翻开</span><span aria-hidden="true">⟶</span></button></div></section></main>
-<footer class="footer"><span>© <span id="year"></span> 何静瑶 Katie</span><span class="keyboard-hint">← → 翻页 · 书签直达</span><span>PORTFOLIO / FIRST EDITION</span></footer><p class="sr-only" id="announcement" aria-live="polite"></p>
-<dialog id="detail"><header class="detail-header"><div id="detail-controls"></div><button id="close-detail" aria-label="关闭作品详情">×</button></header><div id="detail-content" tabindex="0"></div></dialog><div class="intro" id="intro" aria-label="Katie 的开场问候"><button class="skip-intro" id="skip-intro">跳过开场 ↗</button><div class="intro-figure"><img id="intro-image" src="assets/mascot-wave.png" alt="手绘 Katie 挥手打招呼" width="1024" height="1536"></div><div class="intro-copy"><p class="intro-hi">Hi, I'm Katie.</p><p>你好，我是何静瑶。</p><button id="enter-book">一起翻翻我的作品集 <span aria-hidden="true">⟶</span></button></div></div><button id="mascot" class="mascot" aria-label="和 Katie 打个招呼" hidden><span class="mascot-bubble" id="mascot-bubble">一起翻翻吧。</span><img id="mascot-image" src="assets/mascot-wave.png" alt="" width="1024" height="1536"></button><noscript>请启用 JavaScript 来翻阅作品集。</noscript><script src="content.js"></script><script src="app.js"></script><script src="mascot.js"></script><script src="book-companion.js"></script><script src="book-fit.js"></script><script src="book-leaf.js"></script></body></html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>何静瑶 Katie · 作品集</title>
+<meta name="description" content="何静瑶 Katie 的个人作品集：内容运营、新媒体运营、品牌传播与交互体验设计。让好内容被看见，也被记住。">
+<meta name="theme-color" content="#fbf7f3">
+<meta property="og:type" content="website">
+<meta property="og:title" content="何静瑶 Katie · 作品集">
+<meta property="og:description" content="让好内容被看见，也被记住。内容运营 · 新媒体运营 · 品牌传播 · 交互 / 体验设计">
+<meta property="og:image" content="https://katie041123.github.io/katie-portfolio/assets/img/og.jpg">
+<meta property="og:url" content="https://katie041123.github.io/katie-portfolio/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='3' width='21' height='26' rx='3' fill='%23f5cad9'/%3E%3Crect x='6' y='3' width='4' height='26' fill='%23e48fae'/%3E%3Ccircle cx='18' cy='13' r='3' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/kuaile.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <symbol id="arrow" viewBox="0 0 80 44"><path d="M4 34C18 10 44 4 70 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M58 8l13 8-11 10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+ <symbol id="check" viewBox="0 0 24 24"><path d="M4 13c3 2 4.5 4 6 6 3-6 7-11 11-14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+ <symbol id="star" viewBox="0 0 24 24"><path d="M12 2.8l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6-4.5-4.2 6.1-.7z" fill="currentColor"/></symbol>
+ <symbol id="play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></symbol>
+</svg>
+
+<div class="intro" id="intro" hidden aria-hidden="true">
+ <div class="intro-stage">
+  <img class="intro-katie" id="intro-katie" src="assets/img/mascot-wave.webp" alt="" width="304" height="640">
+  <div class="intro-book">
+   <div class="intro-page"></div>
+   <div class="intro-cover">
+    <span class="intro-tape"></span>
+    <strong>何静瑶</strong>
+    <em>Katie</em>
+    <small>PORTFOLIO · 2026</small>
+   </div>
+  </div>
+ </div>
+ <button class="intro-skip" id="intro-skip" type="button">跳过</button>
+</div>
+
+<header class="nav" id="nav">
+ <a class="brand" href="#top" aria-label="回到顶部">Katie <span>/ 何静瑶</span></a>
+ <nav class="nav-links" aria-label="页面导航">
+  <a href="#about" data-tone="blue">关于</a>
+  <a href="#journey" data-tone="pink">经历</a>
+  <a href="#works" data-tone="green">作品</a>
+  <a href="#films" data-tone="beige">影像</a>
+  <a href="#skills" data-tone="blue">技能</a>
+  <a href="#contact" data-tone="pink">联系</a>
+ </nav>
+ <button class="nav-cta" type="button" data-resume>简历</button>
+</header>
+
+<main id="main">
+
+ <section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero-copy">
+   <p class="hero-hi"><span class="hand">Hi~</span> 我是何静瑶 <span class="en">Katie</span></p>
+   <h1 class="hero-title" id="hero-title">让好内容<br><mark>被看见</mark>，也被记住。</h1>
+   <p class="hero-school" id="hero-school"></p>
+   <ul class="roles" id="hero-roles"></ul>
+   <div class="hero-actions">
+    <a class="btn btn-dark" href="#works">看看作品 <span aria-hidden="true">↓</span></a>
+    <button class="btn btn-ghost" type="button" data-resume>在线看简历</button>
+   </div>
+   <div class="sticky-note" id="hero-note"></div>
+  </div>
+  <div class="hero-stage">
+   <p class="hand-note hand-note--stack" aria-hidden="true">这是我做过的东西<svg class="arrow"><use href="#arrow"/></svg></p>
+   <div class="stack" id="stack"></div>
+   <p class="hand-note hand-note--open" aria-hidden="true"><svg class="arrow arrow--flip"><use href="#arrow"/></svg>点开看看</p>
+   <div class="mascot mascot--hero" data-mascot="stand" data-line="hero">
+    <span class="bubble" role="status"></span>
+    <button class="mascot-btn" type="button" aria-label="和 Katie 打个招呼"><img src="assets/img/mascot-wave.webp" alt="" width="304" height="640"></button>
+   </div>
+  </div>
+  <a class="scroll-cue" href="#about" aria-label="往下看"><span class="hand">往下滑</span><span aria-hidden="true">↓</span></a>
+ </section>
+
+ <section class="section about" id="about" aria-labelledby="about-title">
+  <header class="sec-head reveal"><span class="sec-no" data-tone="blue">01</span><h2 class="sec-title" id="about-title">关于我</h2><p class="sec-en">A little about Katie</p></header>
+  <div class="about-grid">
+   <figure class="clip-photo reveal">
+    <span class="clip" aria-hidden="true"></span>
+    <img id="about-portrait" alt="何静瑶的照片" width="800" height="600" loading="lazy">
+    <figcaption class="hand">Hello, it's me ✦</figcaption>
+   </figure>
+   <div class="about-card paper reveal">
+    <span class="tape tape--pink" aria-hidden="true"></span>
+    <p class="about-text" id="about-text"></p>
+    <p class="about-edu" id="about-edu"></p>
+    <ul class="honors" id="about-honors"></ul>
+    <button class="btn btn-ghost" type="button" data-album>生活里的我 <span id="album-count"></span> <span aria-hidden="true">→</span></button>
+    <div class="mascot mascot--peek mascot--about" data-mascot="lie" data-line="about">
+     <span class="bubble" role="status"></span>
+     <button class="mascot-btn" type="button" aria-label="点一下，换个姿势"><img src="assets/img/book-winter.webp" alt="" width="520" height="411" loading="lazy"></button>
+    </div>
+   </div>
+  </div>
+ </section>
+
+ <section class="section journey" id="journey" aria-labelledby="journey-title">
+  <header class="sec-head reveal"><span class="sec-no" data-tone="pink">02</span><h2 class="sec-title" id="journey-title">我的实习旅程</h2><p class="sec-en">My journey so far</p></header>
+  <p class="hand-note hand-note--inline reveal" aria-hidden="true">往下滑，跟着小 Katie 走一遍 ↓</p>
+  <div class="track" id="track">
+   <div class="rail" aria-hidden="true"><span class="rail-fill" id="rail-fill"></span></div>
+   <div class="walker" id="walker" aria-hidden="true">
+    <span class="bubble"></span>
+    <img src="assets/img/mascot-wave.webp" alt="" width="304" height="640" loading="lazy">
+   </div>
+   <ol class="stops" id="stops"></ol>
+  </div>
+ </section>
+
+ <section class="section works" id="works" aria-labelledby="works-title">
+  <header class="sec-head reveal"><span class="sec-no" data-tone="green">03</span><h2 class="sec-title" id="works-title">精选作品</h2><p class="sec-en">Selected work</p></header>
+  <div class="featured" id="featured"></div>
+  <div class="all-works">
+   <div class="all-head reveal">
+    <h3 class="sub-title">全部作品 <span id="works-count"></span></h3>
+    <div class="filters" id="filters" role="group" aria-label="按方向筛选作品"></div>
+   </div>
+   <div class="work-grid" id="work-grid"></div>
+  </div>
+
+  <div class="gacha reveal" id="gacha" aria-labelledby="gacha-title">
+   <p class="hand-note hand-note--gacha" aria-hidden="true">不知道先看哪个？扭一个<svg class="arrow"><use href="#arrow"/></svg></p>
+   <div class="gacha-grid">
+    <div class="machine" id="machine">
+     <div class="machine-dome"><div class="machine-balls" id="machine-balls"></div><span class="dome-shine" aria-hidden="true"></span></div>
+     <div class="machine-body">
+      <h3 class="machine-name" id="gacha-title"></h3>
+      <button class="machine-knob" id="gacha-knob" type="button" aria-label="转动旋钮，扭一个扭蛋"><span></span></button>
+      <span class="machine-coin" aria-hidden="true"></span>
+      <div class="machine-chute"><span class="chute-ball" id="chute-ball" aria-hidden="true"></span></div>
+     </div>
+     <span class="machine-foot" aria-hidden="true"></span>
+     <button class="btn btn-dark machine-go" id="gacha-go" type="button">扭一个！</button>
+    </div>
+    <div class="gacha-side">
+     <div class="capsule-result paper" id="gacha-result" aria-live="polite"></div>
+     <div class="collection paper">
+      <div class="collection-head">
+       <h4>我的扭蛋手账</h4>
+       <span id="gacha-progress"></span>
+      </div>
+      <ol class="collection-grid" id="gacha-collection" aria-label="已收集的扭蛋"></ol>
+      <button class="link-btn" id="gacha-reset" type="button" hidden>重新开始收集</button>
+      <div class="mascot mascot--peek mascot--gacha" data-mascot="lie" data-line="gacha">
+       <span class="bubble" role="status"></span>
+       <button class="mascot-btn" type="button" aria-label="点一下，换个姿势"><img src="assets/img/book-bear.webp" alt="" width="520" height="431" loading="lazy"></button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </section>
+
+ <section class="section films" id="films" aria-labelledby="films-title">
+  <header class="sec-head reveal"><span class="sec-no" data-tone="beige">04</span><h2 class="sec-title" id="films-title">让画面说话</h2><p class="sec-en">Stories in motion</p></header>
+  <div class="films-intro reveal">
+   <p>围绕产品功能、校园场景和热点，完成短视频的选题、脚本、拍摄和剪辑，并适配不同平台的表达。</p>
+   <div class="metrics" id="metrics"></div>
+  </div>
+  <div id="video-groups"></div>
+ </section>
+
+ <section class="section skills" id="skills" aria-labelledby="skills-title">
+  <header class="sec-head reveal"><span class="sec-no" data-tone="blue">05</span><h2 class="sec-title" id="skills-title">我能带来的</h2><p class="sec-en">Skills, with stories</p></header>
+  <div class="checklist paper reveal">
+   <span class="tape tape--green" aria-hidden="true"></span>
+   <ul class="checks" id="checks"></ul>
+   <div class="mascot mascot--peek mascot--skills" data-mascot="lie" data-line="skills">
+    <span class="bubble" role="status"></span>
+    <button class="mascot-btn" type="button" aria-label="点一下，换个姿势"><img src="assets/img/book-flower.webp" alt="" width="520" height="368" loading="lazy"></button>
+   </div>
+  </div>
+ </section>
+
+ <section class="section contact" id="contact" aria-labelledby="contact-title">
+  <header class="sec-head reveal"><span class="sec-no" data-tone="pink">06</span><h2 class="sec-title" id="contact-title">保持联系</h2><p class="sec-en">Let's keep in touch</p></header>
+  <div class="postcard reveal">
+   <div class="postcard-msg">
+    <p class="postcard-hi hand">谢谢你翻到这里！</p>
+    <p>如果这些实践和你正在找的人有关，欢迎来信聊聊。</p>
+    <div class="email-row">
+     <a class="email" id="email" href="#"></a>
+     <button class="link-btn" id="copy-email" type="button">复制</button>
+    </div>
+    <p class="wechat" id="wechat"></p>
+    <div class="postcard-actions">
+     <button class="btn btn-dark" type="button" data-resume>在线看简历</button>
+     <a class="btn btn-ghost" id="resume-download" href="#" download="何静瑶-简历.pdf">下载简历 PDF</a>
+    </div>
+   </div>
+   <div class="postcard-side" aria-hidden="true">
+    <div class="stamp"><img src="assets/img/mascot-wink.webp" alt="" width="291" height="640" loading="lazy"></div>
+    <div class="postmark"><span>KATIE</span><span>2026</span></div>
+    <p class="postcard-line">To：正在看这页的你</p>
+    <p class="postcard-line">From：何静瑶 Katie</p>
+   </div>
+   <div class="mascot mascot--contact" data-mascot="stand" data-line="contact">
+    <span class="bubble" role="status"></span>
+    <button class="mascot-btn" type="button" aria-label="和 Katie 说再见"><img src="assets/img/mascot-wave.webp" alt="" width="304" height="640" loading="lazy"></button>
+   </div>
+  </div>
+ </section>
+</main>
+
+<footer class="footer">
+ <span>© <span id="year">2026</span> 何静瑶 Katie</span>
+ <span class="hand">一页一页，慢慢认识我。</span>
+ <a href="#top">回到顶部 ↑</a>
+</footer>
+
+<dialog class="detail" id="detail" aria-labelledby="detail-title">
+ <div class="detail-bar">
+  <span class="detail-crumb" id="detail-crumb"></span>
+  <button class="detail-close" id="detail-close" type="button" aria-label="关闭">×</button>
+ </div>
+ <div class="detail-body" id="detail-body" tabindex="-1"></div>
+</dialog>
+
+<p class="sr-only" id="announce" aria-live="polite"></p>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<noscript><p class="noscript">请启用 JavaScript 来浏览完整的作品集。</p></noscript>
+
+<script src="content.js"></script>
+<script src="media.js"></script>
+<script src="js/app.js"></script>
+<script src="js/gacha.js"></script>
+<script src="js/fx.js"></script>
+</body>
+</html>

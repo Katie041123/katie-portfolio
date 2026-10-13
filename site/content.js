@@ -1,28 +1,132 @@
 window.PORTFOLIO_CONTENT = {
+  "hero": {
+    "greeting": "Hi~ 我是何静瑶",
+    "tagline": [
+      "让好内容",
+      "被看见，也被记住。"
+    ],
+    "school": "中山大学 · 传播学 · 2027 届",
+    "roles": [
+      "内容运营",
+      "新媒体运营",
+      "品牌传播",
+      "交互 / 体验设计"
+    ],
+    "note": [
+      "3 段实习",
+      "12 组作品",
+      "内容阅读 / 浏览近 60 万"
+    ]
+  },
   "about": "我是何静瑶，来自中山大学新闻传播学院传播学专业。\n我喜欢先理解受众，再把信息整理成清楚、有趣、能落地的内容。从图文运营、活动物料到 AI 工作流，这里记录了我的实践。",
-  "portrait": "assets/portrait.jpg",
+  "portrait": "assets/img/portrait.webp",
   "education": "中山大学 · 传播学｜2023.09—2027.06",
-  "experience": [
-    {
-      "company": "三七互娱",
-      "role": "企业文化实习生",
-      "date": "2026.07—2026.09"
-    },
-    {
-      "company": "玛氏中国",
-      "role": "雇主品牌宣传实习生",
-      "date": "2026.03—2026.07"
-    },
-    {
-      "company": "影石创新 Insta360",
-      "role": "校园创作者",
-      "date": "2025.04—2026.07"
-    }
-  ],
   "honors": [
     "第十届中国公共关系策划大赛 · 全国三等奖",
     "第九届全国数据新闻大赛 · 广东省三等奖",
     "英语 CET-4 / CET-6"
+  ],
+  "experience": [
+    {
+      "id": "insta360",
+      "company": "影石 Insta360",
+      "role": "校园创作者",
+      "date": "2025.04—2026.07",
+      "kind": "项目经历 · 起点",
+      "minor": true,
+      "summary": "围绕产品功能、校园场景和旅行风景创作短视频，独立完成选题、脚本、拍摄和剪辑，主要发在抖音。",
+      "line": "旅程从这里开始，拿着相机到处拍～"
+    },
+    {
+      "id": "mars",
+      "company": "玛氏中国",
+      "role": "雇主品牌宣传实习生",
+      "date": "2026.03—2026.07",
+      "kind": "实习 · 第一站",
+      "bullets": [
+        "运营公众号和小红书官方账号：选题、撰写、排版、发布与数据复盘",
+        "用 Excel 清洗分析 4 万余份简历，提炼候选人画像，支持雇主品牌内容策划",
+        "参与 31 人 Boot Camp 入职营的策划与现场统筹，跟进物料、供应商和跨部门需求"
+      ],
+      "stats": [
+        {
+          "value": "21 万",
+          "label": "小红书浏览 · 29 篇笔记"
+        },
+        {
+          "value": "10.98 万",
+          "label": "公众号阅读 · 5 篇长图文"
+        },
+        {
+          "value": "6,739",
+          "label": "小红书点赞"
+        }
+      ],
+      "works": [
+        "ugc-plog",
+        "offer",
+        "bootcamp",
+        "materials",
+        "icebreaking",
+        "posters"
+      ],
+      "line": "第一站：玛氏！做雇主品牌～"
+    },
+    {
+      "id": "sanqi",
+      "company": "三七互娱",
+      "role": "企业文化实习生",
+      "date": "2026.07—2026.10",
+      "kind": "实习 · 第二站",
+      "bullets": [
+        "负责每日企业电台「AI 新视野」的选题、撰稿和审核，累计 62 篇",
+        "结合热梗和企业文化策划图文、视频，用 GPT 图像生成、Seedance 2.0 辅助制作",
+        "搭建个人 AI 内容工作台，编写可复用 Skill，保留人工核验与审稿",
+        "整理高校赛事 441 份参赛作品；完成 6 篇 KOL 合作 Brief 并跟进交付"
+      ],
+      "stats": [
+        {
+          "value": "28 万",
+          "label": "内容阅读 · 724 赞"
+        },
+        {
+          "value": "3071 人",
+          "label": "活动参与"
+        },
+        {
+          "value": "62 篇",
+          "label": "电台稿 · 另有 36 篇图文、11 条视频"
+        }
+      ],
+      "works": [
+        "midautumn",
+        "ugc-plan",
+        "kol",
+        "sop"
+      ],
+      "line": "第二站：三七，玩心满满！"
+    },
+    {
+      "id": "netease",
+      "company": "网易互娱",
+      "role": "《率土之滨》游戏体验设计实习生",
+      "date": "2026.10—至今",
+      "kind": "实习 · 现在",
+      "current": true,
+      "bullets": [
+        "参与周版本迭代，梳理界面信息结构、交互逻辑和功能反馈，比如二次确认的增删",
+        "基于 Figma 整理组件库、界面规范和交互文档，关注横竖屏适配和设计资产的一致性",
+        "撰写交互文档、分析竞品方案；上游对接策划，下游对接美术和程序"
+      ],
+      "note": "实习进行中，项目内容暂不公开。",
+      "line": "现在在网易，学做游戏体验设计！"
+    }
+  ],
+  "featured": [
+    "longform",
+    "ugc-plog",
+    "light",
+    "websites"
   ],
   "projects": [
     {
@@ -82,9 +186,14 @@ window.PORTFOLIO_CONTENT = {
       ],
       "documents": [],
       "note": "",
-      "image": "",
+      "image": "assets/works/work-042-thumb.jpg",
       "description": "校招、节日与健康主题的长图文表达。",
-      "coverType": "editorial"
+      "hero": {
+        "src": "assets/img/hero-longform.webp",
+        "width": 540,
+        "height": 720,
+        "caption": "推文 / 长图排版"
+      }
     },
     {
       "id": "ugc-plog",
@@ -526,8 +635,14 @@ window.PORTFOLIO_CONTENT = {
         }
       ],
       "note": "合集中的第一人称经历属于受访管培生；我的作品展示重点是内容加工与编排。",
-      "image": "assets/works/work-084-thumb.jpg",
-      "description": "60 页 PLOG 加工合集，呈现真实的工作与成长。"
+      "image": "assets/img/cover-ugc-plog.webp",
+      "description": "60 页 PLOG 加工合集，呈现真实的工作与成长。",
+      "hero": {
+        "src": "assets/img/hero-ugc-plog.webp",
+        "width": 540,
+        "height": 720,
+        "caption": "管培生 PLOG"
+      }
     },
     {
       "id": "ugc-plan",
@@ -599,7 +714,7 @@ window.PORTFOLIO_CONTENT = {
         }
       ],
       "note": "",
-      "image": "",
+      "image": "assets/img/cover-kol.webp",
       "description": "两份探厂 Vlog Brief，连接品牌信息与创作者视角。",
       "sections": [
         {
@@ -1132,7 +1247,13 @@ window.PORTFOLIO_CONTENT = {
       ],
       "note": "这是团队策划提案展示；其中预算、曝光量、销售额等为方案规划或目标，不代表已实际落地的业绩。",
       "image": "assets/works/work-049-thumb.jpg",
-      "description": "35 页团队策划提案，从调研展开到传播规划。"
+      "description": "35 页团队策划提案，从调研展开到传播规划。",
+      "hero": {
+        "src": "assets/img/hero-light.webp",
+        "width": 720,
+        "height": 540,
+        "caption": "光影之下 · 策划"
+      }
     },
     {
       "id": "midautumn",
@@ -1428,93 +1549,76 @@ window.PORTFOLIO_CONTENT = {
       "note": "阅读版保留幻灯片内容，将动图转为静态画面，并省去嵌入视频。",
       "image": "assets/works/icebreaking-cover.png",
       "description": "10 页入职营破冰 PPT，串联签到、交流与游戏。"
-    }
-  ],
-  "skills": [
-    {
-      "title": "内容策划与双平台运营",
-      "description": "从选题、撰写、排版到发布与互动，按公众号、小红书和内部渠道调整表达；结合运营数据复盘内容。",
-      "tools": "公众号 · 小红书 · 秀米",
-      "projects": [
-        "longform",
-        "ugc-plog"
-      ]
     },
     {
-      "title": "数据整理与分析",
-      "description": "使用 Excel 数据透视表与 VLOOKUP 完成清洗、汇总和候选人画像分析；在玛氏实习中处理过 4 万余份简历数据，并支持宣传内容制作。",
-      "tools": "Excel · 数据透视表 · VLOOKUP",
-      "projects": [
-        "longform"
+      "id": "websites",
+      "title": "在网页里讲故事",
+      "category": "网页作品",
+      "summary": "两个网站：一个数据新闻专题，一个 AI 互动网页。",
+      "context": "把调研、数据和互动体验搭成可以浏览的网页，让内容不只停留在图文里。",
+      "image": "assets/works/website-1-cover.jpg",
+      "sites": [
+        {
+          "title": "隐秘的角落：探寻广州城中村的发展轨迹",
+          "role": "负责镝数图表的可视化制作，以及网页的搭建和设计。",
+          "url": "https://readymag.website/u475629664/4844361/",
+          "image": "assets/works/website-1-cover.jpg"
+        },
+        {
+          "title": "do you date yourself?",
+          "role": "负责网站搭建，以及角色卡、视频的生成。",
+          "url": "https://health.willowo.com/",
+          "image": "assets/works/website-2-cover.jpg"
+        }
       ],
-      "note": "原始候选人数据不作为作品展示。"
-    },
-    {
-      "title": "KOL 与 UGC 协作",
-      "description": "整理 KOL 资源与 UGC 素材，寻找并建联合作对象，输出 Brief，跟进脚本、素材和渠道适配。",
-      "tools": "合作 Brief · 素材整理 · 交付跟进",
-      "projects": [
-        "kol",
-        "ugc-plan"
-      ]
-    },
-    {
-      "title": "活动执行与视觉表达",
-      "description": "参与入职营策划与现场统筹，跟进物料、供应商和跨部门需求；将活动信息转成海报、长图与演示材料。",
-      "tools": "Photoshop · Canva · PPT",
-      "projects": [
-        "bootcamp",
-        "materials",
-        "posters"
-      ]
-    },
-    {
-      "title": "AI 内容与工作流实践",
-      "description": "搭建个人 AI 工作台，编写并复用 Skill；将背景、受众和稿件结构整理为提示，辅助初稿与多轮修改，并保留人工核验。",
-      "tools": "ChatGPT · Claude · WorkBuddy · GPT 图像生成 · Seedance 2.0",
-      "projects": [
-        "sop"
-      ]
-    },
-    {
-      "title": "短视频与音频制作",
-      "description": "在校园创作项目中完成选题、脚本、拍摄和剪辑，结合 AI 视频工具辅助素材创作；参与内部电台播报稿整理。",
-      "tools": "剪映 · Audition · AI 视频工具",
-      "projects": []
-    }
-  ],
-  "websites": [
-    {
-      "title": "网站作品 01",
-      "url": "https://readymag.website/u475629664/4844361/",
-      "image": "assets/works/website-1-cover.jpg"
-    },
-    {
-      "title": "网站作品 02",
-      "url": "https://health.willowo.com/",
-      "image": "assets/works/website-2-cover.jpg"
+      "hero": {
+        "src": "assets/img/hero-websites.webp",
+        "width": 640,
+        "height": 480,
+        "caption": "网页作品"
+      }
     }
   ],
   "videos": [
     {
       "title": "Why Mars? 当初为什么选玛氏？",
       "group": "玛氏校园招聘",
-      "url": "https://www.xiaohongshu.com/discovery/item/69b7eaf10000000021013d34?source=webshare&xhsshare=pc_web&xsec_token=AB54ZIIVy7Y7HgNOcOsaeE3yE9BM5Byk4Zqw1rIc_RoEI=&xsec_source=pc_share"
+      "url": "https://www.xiaohongshu.com/discovery/item/69b7eaf10000000021013d34?source=webshare&xhsshare=pc_web&xsec_token=AB54ZIIVy7Y7HgNOcOsaeE3yE9BM5Byk4Zqw1rIc_RoEI=&xsec_source=pc_share",
+      "cover": {
+        "src": "assets/img/video-cover-0.webp",
+        "width": 405,
+        "height": 720
+      }
     },
     {
       "title": "我和玛氏的化学反应是…",
       "group": "玛氏校园招聘",
-      "url": "https://www.xiaohongshu.com/discovery/item/69b93770000000001a031ad5?source=webshare&xhsshare=pc_web&xsec_token=ABFuOOxBykIF8zEYCaGaQCao7c-Di_XS8L66RiabzNCzA=&xsec_source=pc_share"
+      "url": "https://www.xiaohongshu.com/discovery/item/69b93770000000001a031ad5?source=webshare&xhsshare=pc_web&xsec_token=ABFuOOxBykIF8zEYCaGaQCao7c-Di_XS8L66RiabzNCzA=&xsec_source=pc_share",
+      "cover": {
+        "src": "assets/img/video-cover-1.webp",
+        "width": 405,
+        "height": 720
+      }
     },
     {
       "title": "给玛氏打分？我的答案是…",
       "group": "玛氏校园招聘",
-      "url": "https://www.xiaohongshu.com/discovery/item/69ba794e000000001a02b290?source=webshare&xhsshare=pc_web&xsec_token=AB71hf8Juq-bFtpR3AVqOQT-ND_oUsfw2tchWcO4p7uwU=&xsec_source=pc_share"
+      "url": "https://www.xiaohongshu.com/discovery/item/69ba794e000000001a02b290?source=webshare&xhsshare=pc_web&xsec_token=AB71hf8Juq-bFtpR3AVqOQT-ND_oUsfw2tchWcO4p7uwU=&xsec_source=pc_share",
+      "cover": {
+        "src": "assets/img/video-cover-2.webp",
+        "width": 405,
+        "height": 720
+      }
     },
     {
       "title": "假如今天不上班？我一定…！",
       "group": "玛氏校园招聘",
-      "url": "https://www.xiaohongshu.com/discovery/item/69bbdd7f000000002102e261?source=webshare&xhsshare=pc_web&xsec_token=ABLQjqd9PV5eLXd96M0MTOw_6DGdlCqTTDnjJoX5Nm6tI=&xsec_source=pc_share"
+      "url": "https://www.xiaohongshu.com/discovery/item/69bbdd7f000000002102e261?source=webshare&xhsshare=pc_web&xsec_token=ABLQjqd9PV5eLXd96M0MTOw_6DGdlCqTTDnjJoX5Nm6tI=&xsec_source=pc_share",
+      "cover": {
+        "src": "assets/img/video-cover-3.webp",
+        "width": 405,
+        "height": 720
+      }
     },
     {
       "title": "公司居然有一饭封神？寻找有才、有料的你",
@@ -1527,17 +1631,83 @@ window.PORTFOLIO_CONTENT = {
       "url": "https://www.xiaohongshu.com/discovery/item/6a856c5600000000330344ec?source=webshare&xhsshare=pc_web&xsec_token=ABMeRFgnYfzxigjxSNREWAMWTUikJomITNxSNQUJJKR1I=&xsec_source=pc_share"
     }
   ],
-  "contact": {
-    "email": "1035785935@qq.com"
+  "videoGroups": {
+    "玛氏校园招聘": "玛氏校园招聘 · 快问快答",
+    "三七互娱招聘": "三七互娱招聘"
   },
-  "resumeUrl": "assets/works/resume.pdf",
-  "resumeImages": [
+  "metrics": [
     {
-      "src": "assets/works/work-048.jpg",
-      "thumb": "assets/works/work-048-thumb.jpg",
-      "caption": "个人简历 · 第 1 页",
-      "width": 1273,
-      "height": 1800
+      "value": "7 万+",
+      "label": "个人小红书累计播放"
+    },
+    {
+      "value": "16.8 万",
+      "label": "个人抖音累计播放"
+    }
+  ],
+  "videoPlanningUrl": "assets/works/unboxing-script.xlsx",
+  "skills": [
+    {
+      "title": "内容策划与双平台运营",
+      "tools": "公众号 · 小红书 · 秀米",
+      "description": "从选题、撰写、排版到发布与互动，按公众号、小红书和内部渠道调整表达，并用运营数据复盘内容。",
+      "projects": [
+        "longform",
+        "ugc-plog"
+      ]
+    },
+    {
+      "title": "数据整理与分析",
+      "tools": "Excel · 数据透视表 · VLOOKUP",
+      "description": "在玛氏实习中清洗分析 4 万余份简历，做候选人画像和数据可视化，支持雇主品牌内容策划。",
+      "projects": []
+    },
+    {
+      "title": "KOL 与 UGC 协作",
+      "tools": "合作 Brief · 素材整理 · 交付跟进",
+      "description": "整理 KOL 资源与 UGC 素材，建联合作对象、输出 Brief，跟进脚本、素材和渠道适配。",
+      "projects": [
+        "kol",
+        "ugc-plan"
+      ]
+    },
+    {
+      "title": "活动执行与视觉表达",
+      "tools": "Photoshop · Canva · PPT",
+      "description": "参与入职营策划与现场统筹，把活动信息做成海报、长图、物料和演示材料。",
+      "projects": [
+        "bootcamp",
+        "materials",
+        "posters"
+      ]
+    },
+    {
+      "title": "AI 内容与工作流",
+      "tools": "AI 工作台 · Skill 编写 · GPT 图像生成 · Seedance 2.0 · WorkBuddy",
+      "description": "搭建个人 AI 内容工作台，编写可复用 Skill，辅助选题、初稿和多轮修改，同时保留人工核验。",
+      "projects": [
+        "sop"
+      ]
+    },
+    {
+      "title": "交互文档与设计规范",
+      "tools": "Figma · 组件库 · 交互文档",
+      "description": "在网易参与《率土之滨》版本迭代，梳理信息结构和交互逻辑，用 Figma 整理组件库与界面规范。",
+      "projects": []
+    },
+    {
+      "title": "网页搭建与数据可视化",
+      "tools": "镝数图表 · AI 辅助建站",
+      "description": "把数据新闻和互动内容搭成网页，负责图表可视化、页面设计和搭建。",
+      "projects": [
+        "websites"
+      ]
+    },
+    {
+      "title": "短视频与音频制作",
+      "tools": "剪映 · Audition · AI 视频工具",
+      "description": "完成短视频选题、脚本、拍摄和剪辑，适配抖音与小红书；参与内部电台播报稿制作。",
+      "projects": []
     }
   ],
   "photos": [
@@ -1619,67 +1789,56 @@ window.PORTFOLIO_CONTENT = {
       "height": 2700
     }
   ],
-  "metrics": [
-    {
-      "value": "7 万+",
-      "label": "个人小红书累计播放"
-    },
-    {
-      "value": "16.8 万",
-      "label": "个人抖音累计播放"
-    }
+  "facts": [
+    "旅行很喜欢记录，回来会捣鼓剪成小片子，留着以后回忆！",
+    "老吃家，特别爱探店（不一定是漂亮饭！涉猎十分广泛）",
+    "ENFP：工作努力靠近 J 人的一只快乐小狗",
+    "很喜欢交朋友！",
+    "在爱运动与不爱运动之间反复横跳",
+    "喜欢小猫小狗！"
   ],
-  "videoDrafts": [
-    {
-      "title": "快问快答 · 第1期",
-      "cover": {
-        "src": "assets/works/video-cover-0.jpg",
-        "thumb": "assets/works/video-cover-0-thumb.jpg",
-        "caption": "快问快答 · 第1期",
-        "width": 1350,
-        "height": 2400
-      }
-    },
-    {
-      "title": "快问快答 · 第2期",
-      "cover": {
-        "src": "assets/works/video-cover-1.jpg",
-        "thumb": "assets/works/video-cover-1-thumb.jpg",
-        "caption": "快问快答 · 第2期",
-        "width": 1350,
-        "height": 2400
-      }
-    },
-    {
-      "title": "快问快答 · 第3期",
-      "cover": {
-        "src": "assets/works/video-cover-2.jpg",
-        "thumb": "assets/works/video-cover-2-thumb.jpg",
-        "caption": "快问快答 · 第3期",
-        "width": 1350,
-        "height": 2400
-      }
-    },
-    {
-      "title": "快问快答 · 第4期",
-      "cover": {
-        "src": "assets/works/video-cover-3.jpg",
-        "thumb": "assets/works/video-cover-3-thumb.jpg",
-        "caption": "快问快答 · 第4期",
-        "width": 1350,
-        "height": 2400
-      }
-    },
-    {
-      "title": "破冰介绍视频",
-      "cover": {
-        "src": "assets/works/video-cover-4.jpg",
-        "thumb": "assets/works/video-cover-4-thumb.jpg",
-        "caption": "破冰介绍视频",
-        "width": 1724,
-        "height": 952
-      }
+  "gacha": {
+    "name": "彩蛋 & 扭蛋机",
+    "earlyHiddenChance": 0.05,
+    "hidden": {
+      "message": "恭喜你抽到隐藏款！希望你品尝幸福滋味的时候，发现幸福——美味多汁！",
+      "image": "assets/img/book-flower.webp"
     }
-  ],
-  "videoPlanningUrl": "assets/works/unboxing-script.xlsx"
+  },
+  "lines": {
+    "hero": "Hi，欢迎光临我的作品集~ ๑>ᴗ<๑⁺！",
+    "click": [
+      "点卡片就能看作品哦 = ᗜ ω ᗜ.=",
+      "往下滑，带你走一遍我的实习旅程！",
+      "饿了…看完作品一起去探店吗 🍴₍^ₗ ̫˳ ₗ^₎★",
+      "我是 ENFP，超爱交朋友的！",
+      "今天也要好好做内容 ๑>ᴗ<๑⁺",
+      "偷偷告诉你，作品区下面有扭蛋机～"
+    ],
+    "about": "这是生活里的我～",
+    "works": "这些都是我认真做的！",
+    "films": "让画面说话 ✦",
+    "skills": "打勾的都是我会的！",
+    "contact": "等你来信呀～",
+    "gacha": {
+      "idle": "不知道先看哪个？来扭一个！",
+      "work": "这个是我认真做的！",
+      "fact": "被你发现啦 ๑>ᴗ<๑⁺",
+      "hidden": "哇！隐藏款！= ᗜ ω ᗜ.=",
+      "done": "全部集齐啦，你也太厉害了吧！"
+    }
+  },
+  "contact": {
+    "email": "1035785935@qq.com",
+    "wechat": "微信请邮件索取"
+  },
+  "resumeUrl": "assets/works/katie-resume.pdf",
+  "resumeImages": [
+    {
+      "src": "assets/img/resume.webp",
+      "caption": "个人简历",
+      "width": 1240,
+      "height": 1753
+    }
+  ]
 };
